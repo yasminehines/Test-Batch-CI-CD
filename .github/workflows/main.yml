@@ -29,5 +29,11 @@ jobs:
         if: steps.CheckUnixScripts.outputs.num == 1
         run: |
           cd ./UnixScripts
+          mv hello.ksh hello.ksh`date +%m%d_%H%M`
+          mv hello.ksh* ./oldUnixScripts
+          cd ..
+          cd ./oldUnixScripts
           ls -R
+          echo "Files and Directories overwritten/moved."
+          echo '::set-output name=num::0'
   
