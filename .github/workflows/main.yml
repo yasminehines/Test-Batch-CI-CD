@@ -11,3 +11,47 @@ jobs:
 
       - name: Run a one-line script
         run: echo "Hello, world!"
+
+      - name: Check Unix Scripts Directory
+        id: CheckUnixScripts
+        working-directory: ./UnixScripts
+        run: |
+          if [ -z "$(ls)" ]; then
+              echo "Empty"
+              echo '::set-output name=num::0'
+          else
+              echo "Not Empty"
+              echo '::set-output name=num::1'
+          fi
+
+      - name: Overwrite Files & Directories
+        id: OverwriteFiles
+        if: steps.CheckUnixScripts.outputs.num == 1
+        working-directory: ./UnixScripts
+        run: |
+          mv cmd
+          echo "Files and Directories overwritten"
+          echo '::set-output name=num::0'
+
+      # extract artifacts from dev
+      - name: Extracts Artifacts
+        if: steps.CheckUnixScripts.outputs.num == 0 || steps.OverwriteFiles.outputs.num == 0
+        # run: |
+        #   echo "Extracting artifacts from dev" 
+        uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact
+      # path of artifacts from dev
+          path: ./artifacts
+          if-no-files-found: warn
+    
+      - name: Download Artifacts
+        if: steps.CheckUnixScripts.outputs.num == 0 || steps.OverwriteFiles.outputs.num == 0
+        uses: actions/download-artifact@v2
+        with:
+          name: my-artifact
+          path: ./artifacts2.0    
+        
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: ./artifacts2.0  
