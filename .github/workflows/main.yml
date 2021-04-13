@@ -27,32 +27,7 @@ jobs:
       - name: Overwrite Files & Directories
         id: OverwriteFiles
         if: steps.CheckUnixScripts.outputs.num == 1
-        working-directory: ./UnixScripts
         run: |
-          mv hello.ksh hello.ksh`date +%m%d_%H%M`
-          mv *.ksh ./oldUnixScripts
-          echo "Files and Directories overwritten/moved."
-          echo '::set-output name=num::0'
-
-      # extract artifacts from dev
-      - name: Extracts Artifacts
-        if: steps.CheckUnixScripts.outputs.num == 0 || steps.OverwriteFiles.outputs.num == 0
-        # run: |
-        #   echo "Extracting artifacts from dev" 
-        uses: actions/upload-artifact@v2
-        with:
-          name: my-artifact
-      # path of artifacts from dev
-          path: ./artifacts
-          if-no-files-found: warn
-    
-      - name: Download Artifacts
-        if: steps.CheckUnixScripts.outputs.num == 0 || steps.OverwriteFiles.outputs.num == 0
-        uses: actions/download-artifact@v2
-        with:
-          name: my-artifact
-          path: ./new-artifacts    
-        
-      - name: Display structure of downloaded files
-        run: ls -R
-        working-directory: ./new-artifacts  
+          cd ./UnixScripts
+          ls -R
+  
