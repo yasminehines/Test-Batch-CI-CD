@@ -29,8 +29,9 @@ jobs:
         if: steps.CheckUnixScripts.outputs.num == 1
         working-directory: ./UnixScripts
         run: |
-          mv cmd ./UnixScripts
-          echo "Files and Directories overwritten"
+          mv hello.ksh hello.ksh`date +%m%d_%H%M`
+          mv *.ksh ./oldUnixScripts
+          echo "Files and Directories overwritten/moved."
           echo '::set-output name=num::0'
 
       # extract artifacts from dev
@@ -54,4 +55,4 @@ jobs:
         
       - name: Display structure of downloaded files
         run: ls -R
-        working-directory: ./artifacts2.0  
+        working-directory: ./new-artifacts  
