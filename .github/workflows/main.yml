@@ -29,6 +29,5 @@ jobs:
         if: steps.CheckUnixScripts.outputs.num == 1
         run: |
           cd ./UnixScripts
-          mv hello.ksh hello.ksh`date +%m%d_%H%M`
           ls -R
   
