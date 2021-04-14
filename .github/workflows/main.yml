@@ -11,3 +11,30 @@ jobs:
 
       - name: Run a one-line script
         run: echo "Hello, world!"
+
+      - name: Check Unix Scripts Directory
+        id: CheckUnixScripts
+        working-directory: ./UnixScripts
+        run: |
+          if [ -z "$(ls)" ]; then
+              echo "Empty"
+              echo '::set-output name=num::0'
+          else
+              echo "Not Empty"
+              echo '::set-output name=num::1'
+          fi
+
+      - name: Overwrite Files & Directories
+        id: OverwriteFiles
+        if: steps.CheckUnixScripts.outputs.num == 1
+        run: |
+          cd ./UnixScripts
+          mv hello.ksh hello.ksh`date +%m%d_%H%M`
+          mv hello.ksh* ./oldUnixScripts
+      
+      - name: Overwrite Files & Directories Part 2
+        run: |
+          cd ./oldUnixScripts
+          ls -R
+          echo "Files and Directories overwritten/moved."
+          echo '::set-output name=num::0'
