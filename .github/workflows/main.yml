@@ -4,7 +4,7 @@ on: push
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: oracle linux-latest
 
     steps:
       - uses: actions/checkout@v2
@@ -31,9 +31,10 @@ jobs:
           cd ./UnixScripts
           mv hello.ksh hello.ksh`date +%m%d_%H%M`
           mv hello.ksh* ./oldUnixScripts
-          cd ..
+      
+      - name: Overwrite Files & Directories Part 2
+        run: |
           cd ./oldUnixScripts
           ls -R
           echo "Files and Directories overwritten/moved."
           echo '::set-output name=num::0'
-  
