@@ -29,8 +29,8 @@ jobs:
         if: steps.CheckUnixScripts.outputs.num == 1
         run: |
           cd ./UnixScripts
-          mv hello.ksh hello.ksh`date +%m%d_%H%M`
-          mv hello.ksh* ./oldUnixScripts
+          mv hello2.ksh hello.ksh`date +%m%d_%H%M`
+          mv hello2.ksh* ./oldUnixScripts
       
       - name: Overwrite Files & Directories Part 2
         run: |
