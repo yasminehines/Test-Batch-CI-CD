@@ -28,8 +28,9 @@ jobs:
         id: OverwriteFiles
         if: steps.CheckUnixScripts.outputs.num == 1
         run: |
-          cd ./UnixScripts 
-          mv *.ksh ./oldUnixScripts/
+          cd ./oldUnixScripts 
+          pwd
+
       
       - name: Overwrite Files & Directories Part 2
         run: |
