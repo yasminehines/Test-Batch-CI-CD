@@ -1,25 +1,11 @@
-name: Main
+name: CI
 
-on:
-
-  repository_dispatch:
-    types: [build] 
-
-  # Cron Schedule
-  schedule:
-    - cron: "5 * * * *"
-
-  # On push
-  #push:
-    # branches: [ main ]
-  
-  pull_request:
-    branches: [ main ]
+on: push
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v2
 
@@ -38,3 +24,16 @@ jobs:
               echo '::set-output name=num::1'
           fi
 
+      - name: Overwrite Files & Directories
+        id: OverwriteFiles
+        if: steps.CheckUnixScripts.outputs.num == 1
+        run: |
+          cd ./UnixScripts 
+          mv *.ksh /home/runner/work/Test-Batch-CI-CD/Test-Batch-CI-CD/oldUnixScripts
+      
+      - name: Overwrite Files & Directories Part 2
+        run: |
+          cd ./oldUnixScripts
+          ls -R
+          echo "Files and Directories overwritten/moved."
+          echo '::set-output name=num::0'
