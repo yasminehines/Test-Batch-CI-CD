@@ -1,14 +1,20 @@
 name: Main
 
-on: 
+on:
+
+  repository_dispatch:
+    types: [build] 
+
   # Cron Schedule
   schedule:
     - cron: "5 * * * *"
 
   # On push
-  push:
-    branches:
-      - dev
+  #push:
+    # branches: [ main ]
+  
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
@@ -31,3 +37,4 @@ jobs:
               echo "Not Empty"
               echo '::set-output name=num::1'
           fi
+
