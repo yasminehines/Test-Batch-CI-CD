@@ -32,7 +32,7 @@ jobs:
           echo "test" > help.txt
           git config --global user.email "yasmine.hines@aa.com"
           git config --global user.name "yasminehines"
-          git add --all Backup/
+          git add help.txt
           git commit -m "Test"
           git push
               
