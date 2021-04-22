@@ -25,16 +25,35 @@ jobs:
           fi
 
       - name: Overwrite Files & Directories
-        id: OverwriteFiles
+        id: OverwriteFiles1
         if: steps.CheckUnixScripts.outputs.num == 1
         run: |
           cd ./UnixScripts
-          mv hello.ksh hello.ksh`date +%m%d_%H%M`
-          mv hello.ksh* ./oldUnixScripts
-      
+          git config --global user.email "yasmine.hines@aa.com"
+          git config --global user.name "yasminehines"
+          git mv *.ksh /home/runner/work/Test-Batch-CI-CD/Test-Batch-CI-CD/Backup
+          cd ..
+          git add ./Backup/AA.ksh
+          git add ./Backup/help.ksh
+          git commit -m "add files to Backup"
+          git push
+              
       - name: Overwrite Files & Directories Part 2
+        id: OverwriteFiles2
         run: |
-          cd ./oldUnixScripts
+          cd ./Backup
           ls -R
           echo "Files and Directories overwritten/moved."
           echo '::set-output name=num::0'
+
+      # extract artifacts from dev
+      # - name: Extracts Artifacts
+      #   if: steps.CheckUnixScripts.outputs.num == 0 || steps.OverwriteFiles2.outputs.num == 0
+      #   # run: |
+      #   #   echo "Extracting artifacts from dev" 
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: my-artifact
+      #   # path of artifacts from dev
+      #     path: ./artifacts
+      #     if-no-files-found: warn
