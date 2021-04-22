@@ -31,7 +31,7 @@ jobs:
           cd ./UnixScripts
           git config --global user.email "yasmine.hines@aa.com"
           git config --global user.name "yasminehines"
-          mv .ksh* ./Backup
+          mv *.ksh ./Backup
           git commit -m "add files to Backup"
           git push
               
