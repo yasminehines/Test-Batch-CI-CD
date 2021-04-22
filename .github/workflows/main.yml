@@ -28,12 +28,12 @@ jobs:
         id: OverwriteFiles1
         if: steps.CheckUnixScripts.outputs.num == 1
         run: |
-          mkdir -p Backup
-          echo "test" > help.txt
+          cd Backup
+          echo "#Hello World" > HelloWorld.ksh
           git config --global user.email "yasmine.hines@aa.com"
           git config --global user.name "yasminehines"
-          git add help.txt
-          git commit -m "Test"
+          git add HelloWorld.ksh
+          git commit -m "add file to Backup"
           git push
               
       - name: Overwrite Files & Directories Part 2
