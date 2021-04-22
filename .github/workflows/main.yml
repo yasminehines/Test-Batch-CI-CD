@@ -29,19 +29,15 @@ jobs:
         if: steps.CheckUnixScripts.outputs.num == 1
         run: |
           mkdir -p Backup
-          echo "#hello world" > helloworld.ksh
-
+          echo "test" > help.txt
           git config --global user.email "yasmine.hines@aa.com"
           git config --global user.name "yasminehines"
-          
-          git add helloworld.ksh
-          git commit -m "Test"
-          git push
+          git add --all BackupUnixScripts/
               
       - name: Overwrite Files & Directories Part 2
         id: OverwriteFiles2
         run: |
-          cd ./UnixScripts/Backup
+          cd ./Backup
           ls -R
           echo "Files and Directories overwritten/moved."
           echo '::set-output name=num::0'
