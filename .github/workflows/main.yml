@@ -12,39 +12,39 @@ jobs:
       - name: Run a one-line script
         run: echo "Hello, world!"
 
-      # - name: Check Unix Scripts Directory
-      #   id: CheckUnixScripts
-      #   working-directory: ./UnixScripts
-      #   run: |
-      #     if [ -z "$(ls)" ]; then
-      #         echo "Empty"
-      #         echo '::set-output name=num::0'
-      #     else
-      #         echo "Not Empty"
-      #         echo '::set-output name=num::1'
-      #     fi
+      - name: Check Unix Scripts Directory
+        id: CheckUnixScripts
+        working-directory: ./UnixScripts
+        run: |
+          if [ -z "$(ls)" ]; then
+              echo "Empty"
+              echo '::set-output name=num::0'
+          else
+              echo "Not Empty"
+              echo '::set-output name=num::1'
+          fi
 
-      # - name: Overwrite Files & Directories
-      #   id: OverwriteFiles1
-      #   if: steps.CheckUnixScripts.outputs.num == 1
-      #   run: |
-      #     cd ./UnixScripts
-      #     git config --global user.email "yasmine.hines@aa.com"
-      #     git config --global user.name "yasminehines"
-      #     git mv *.ksh /home/runner/work/Test-Batch-CI-CD/Test-Batch-CI-CD/Backup
-      #     cd ..
-      #     git add ./Backup/hello.ksh
-      #     git add ./Backup/hello2.ksh
-      #     git commit -m "add files to Backup"
-      #     git push
+      - name: Overwrite Files & Directories
+        id: OverwriteFiles1
+        if: steps.CheckUnixScripts.outputs.num == 1
+        run: |
+          cd ./UnixScripts
+          git config --global user.email "yasmine.hines@aa.com"
+          git config --global user.name "yasminehines"
+          git mv *.ksh /home/runner/work/Test-Batch-CI-CD/Test-Batch-CI-CD/Backup
+          cd ..
+          git add ./Backup/AA.ksh
+          git add ./Backup/help.ksh
+          git commit -m "add files to Backup"
+          git push
               
-      # - name: Overwrite Files & Directories Part 2
-      #   id: OverwriteFiles2
-      #   run: |
-      #     cd ./Backup
-      #     ls -R
-      #     echo "Files and Directories overwritten/moved."
-      #     echo '::set-output name=num::0'
+      - name: Overwrite Files & Directories Part 2
+        id: OverwriteFiles2
+        run: |
+          cd ./Backup
+          ls -R
+          echo "Files and Directories overwritten/moved."
+          echo '::set-output name=num::0'
 
       # extract artifacts from dev
       # - name: Extracts Artifacts
