@@ -33,6 +33,8 @@ jobs:
           git config --global user.email "yasmine.hines@aa.com"
           git config --global user.name "yasminehines"
           git add --all Backup/
+          git commit -m "Test"
+          git push
               
       - name: Overwrite Files & Directories Part 2
         id: OverwriteFiles2
