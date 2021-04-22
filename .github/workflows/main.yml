@@ -31,7 +31,7 @@ jobs:
           cd ./UnixScripts
           git config --global user.email "yasmine.hines@aa.com"
           git config --global user.name "yasminehines"
-          mv *.ksh /home/runner/work/Test-Batch-CI-CD/Test-Batch-CI-CD/Backup
+          git mv *.ksh /home/runner/work/Test-Batch-CI-CD/Test-Batch-CI-CD/Backup
           cd ..
           git add ./Backup/hello.ksh
           git add ./Backup/hello2.ksh
