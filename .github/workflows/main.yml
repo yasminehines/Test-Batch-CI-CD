@@ -28,11 +28,15 @@ jobs:
         id: OverwriteFiles1
         if: steps.CheckUnixScripts.outputs.num == 1
         run: |
-          cd ./UnixScripts 
-          mkdir -p Backup
-
-          git mv *.ksh /home/runner/work/Test-Batch-CI-CD/Test-Batch-CI-CD/UnixScripts/Backup
-      
+          cd ./UnixScripts/Backup
+          echo "#hello world" > helloworld.ksh
+          git config --global user.email "yasmine.hines@aa.com"
+          git config --global user.name "yasminehines"
+          
+          git add helloworld.txt
+          git commit -m "Test"
+          git push
+              
       - name: Overwrite Files & Directories Part 2
         id: OverwriteFiles2
         run: |
