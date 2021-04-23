@@ -1,5 +1,12 @@
-# Ignore all files in this dir...
+# .gitignore to keep just .ksh files
+###################################
+
+# Filter everything...
 *
 
 # ... except for this one.
 !.gitignore
+
+
+# ... and all text files.
+!*.ksh
