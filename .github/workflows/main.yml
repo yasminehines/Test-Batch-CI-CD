@@ -34,7 +34,8 @@ jobs:
       #   id: OverwriteFiles1
       #   if: steps.CheckUnixScripts.outputs.num == 1
       #   run: |
-      #     cd ./UnixScripts
+            # cd ./UnixScripts
+            # mv AA.ksh $file-`date +%m%d%y`
       #     git config --global user.email "yasmine.hines@aa.com"
       #     git config --global user.name "yasminehines"
       #     git mv *.ksh /home/runner/work/Test-Batch-CI-CD/Test-Batch-CI-CD/Backup
