@@ -9,49 +9,58 @@ on:
       - main
 
 jobs:
-  build:
+  test-example:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
-
       - name: Run a one-line script
         run: echo "Hello, world!"
-
-      # - name: Check Unix Scripts Directory
-      #   id: CheckUnixScripts
-      #   working-directory: ./UnixScripts
-      #   run: |
-      #     if [ -z "$(ls)" ]; then
-      #         echo "Empty"
-      #         echo '::set-output name=num::0'
-      #     else
-      #         echo "Not Empty"
-      #         echo '::set-output name=num::1'
-      #     fi
-
-      # - name: Overwrite Files & Directories
-      #   id: OverwriteFiles1
-      #   if: steps.CheckUnixScripts.outputs.num == 1
-      #   run: |
-            # cd ./UnixScripts
-            # mv AA.ksh $file-`date +%m%d%y`
-      #     git config --global user.email "yasmine.hines@aa.com"
-      #     git config --global user.name "yasminehines"
-      #     git mv *.ksh /home/runner/work/Test-Batch-CI-CD/Test-Batch-CI-CD/Backup
-      #     cd ..
-      #     git add ./Backup/
-      #     git commit -m "add files to Backup"
-      #     git push
-              
-      # - name: Overwrite Files & Directories Part 2
-      #   id: OverwriteFiles2
-      #   run: |
-      #     cd ./Backup
-      #     ls -R
-      #     echo "Files and Directories overwritten/moved."
-      #     echo '::set-output name=num::0'
-
+  
+  check-UnixScripts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Unix Scripts Directory
+        id: CheckUnixScripts
+        working-directory: ./UnixScripts
+        run: |
+          if [ -z "$(ls)" ]; then
+              echo "Empty"
+              echo '::set-output name=num::0'
+          else
+              echo "Not Empty"
+              echo '::set-output name=num::1'
+          fi
+  
+  overwrite-files-part-1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Overwrite Files & Directories
+        id: OverwriteFiles1
+        if: steps.CheckUnixScripts.outputs.num == 1
+        run: |
+           cd ./UnixScripts
+          git config --global user.email "yasmine.hines@aa.com"
+          git config --global user.name "yasminehines"
+          git mv *.ksh /home/runner/work/Test-Batch-CI-CD/Test-Batch-CI-CD/Backup
+          cd ..
+          git add ./Backup/
+          git commit -m "add files to Backup"
+          git push
+  
+  overwrite-files-part-2:
+    runs-on: ubuntu-latest
+    steps:            
+      - name: Overwrite Files & Directories Part 2
+        id: OverwriteFiles2
+        run: |
+          cd ./Backup
+          ls -R
+          echo "Files and Directories overwritten/moved."
+          echo '::set-output name=num::0'
+  
+  extract-artifacts:
+    runs-on: ubuntu-latest
+    steps:
       # extract artifacts from dev
       - name: Extracts Artifacts
         if: steps.CheckUnixScripts.outputs.num == 0 || steps.OverwriteFiles2.outputs.num == 0
@@ -61,5 +70,5 @@ jobs:
         with:
           name: my-artifact
         # path of artifacts from dev
-          path: ./new-artifacts
+          path: ./artifacts
           if-no-files-found: warn
