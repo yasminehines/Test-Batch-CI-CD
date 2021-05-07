@@ -17,6 +17,7 @@ jobs:
         run: echo "Hello, world!"
   
   check-UnixScripts:
+    needs: test-example
     runs-on: ubuntu-latest
     steps:
       - name: Check Unix Scripts Directory
@@ -32,6 +33,7 @@ jobs:
           fi
   
   overwrite-files-part-1:
+    needs: check-UnixScripts
     runs-on: ubuntu-latest
     steps:
       - name: Overwrite Files & Directories
@@ -48,6 +50,7 @@ jobs:
           git push
   
   overwrite-files-part-2:
+    needs: overwrite-files-part-1
     runs-on: ubuntu-latest
     steps:            
       - name: Overwrite Files & Directories Part 2
@@ -59,6 +62,7 @@ jobs:
           echo '::set-output name=num::0'
   
   extract-artifacts:
+    needs: overwrite-files-part-2
     runs-on: ubuntu-latest
     steps:
       # extract artifacts from dev
