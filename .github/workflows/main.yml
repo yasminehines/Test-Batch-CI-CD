@@ -54,19 +54,19 @@ jobs:
   #         echo "Files and Directories overwritten/moved."
   #         echo '::set-output name=num::0'
   
-  extract-artifacts:
-    # needs: overwrite-files-part-2
-    needs: check-UnixScripts
-    runs-on: ubuntu-latest
-    steps:
-      # extract artifacts from dev
-      - name: Extracts Artifacts
-        if: steps.CheckUnixScripts.outputs.num == 0 || steps.OverwriteFiles2.outputs.num == 0
-        # run: |
-        #   echo "Extracting artifacts from dev" 
-        uses: actions/upload-artifact@v2
-        with:
-          name: my-artifact
-        # path of artifacts from dev
-          path: ./artifacts
-          if-no-files-found: warn
+  # extract-artifacts:
+  #   # needs: overwrite-files-part-2
+  #   needs: check-UnixScripts
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     # extract artifacts from dev
+  #     - name: Extracts Artifacts
+  #       if: steps.CheckUnixScripts.outputs.num == 0 || steps.OverwriteFiles2.outputs.num == 0
+  #       # run: |
+  #       #   echo "Extracting artifacts from dev" 
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         name: my-artifact
+  #       # path of artifacts from dev
+  #         path: ./artifacts
+  #         if-no-files-found: warn
