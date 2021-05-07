@@ -19,12 +19,12 @@ jobs:
   check-UnixScripts:
     runs-on: ubuntu-latest
     steps:
-      - name: Check Unix Scripts Directory
-        id: CheckUnixScripts
-        # working-directory: ./UnixScripts
-        run: |
-          cd ./UnixScripts
-          pwd
+    - name: Check Unix Scripts Directory
+      id: CheckUnixScripts
+      # working-directory: ./UnixScripts
+      run: |
+        cd ./UnixScripts
+        pwd
   
   # overwrite-files-part-1:
   #   needs: check-UnixScripts
