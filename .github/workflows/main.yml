@@ -22,9 +22,8 @@ jobs:
     steps:
       - name: Check Unix Scripts Directory
         id: CheckUnixScripts
-        # working-directory: ./UnixScripts
+        working-directory: ./UnixScripts
         run: |
-          cd ./UnixScripts
           if [ -z "$(ls)" ]; then
               echo "Empty"
               echo '::set-output name=num::0'
@@ -33,37 +32,38 @@ jobs:
               echo '::set-output name=num::1'
           fi
   
-  overwrite-files-part-1:
-    needs: check-UnixScripts
-    runs-on: ubuntu-latest
-    steps:
-      - name: Overwrite Files & Directories
-        id: OverwriteFiles1
-        if: steps.CheckUnixScripts.outputs.num == 1
-        run: |
-          cd ./UnixScripts
-          git config --global user.email "yasmine.hines@aa.com"
-          git config --global user.name "yasminehines"
-          git mv *.ksh /home/runner/work/Test-Batch-CI-CD/Test-Batch-CI-CD/Backup
-          cd ..
-          git add ./Backup/
-          git commit -m "add files to Backup"
-          git push
+  # overwrite-files-part-1:
+  #   needs: check-UnixScripts
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Overwrite Files & Directories
+  #       id: OverwriteFiles1
+  #       if: steps.CheckUnixScripts.outputs.num == 1
+  #       run: |
+  #         cd ./UnixScripts
+  #         git config --global user.email "yasmine.hines@aa.com"
+  #         git config --global user.name "yasminehines"
+  #         git mv *.ksh /home/runner/work/Test-Batch-CI-CD/Test-Batch-CI-CD/Backup
+  #         cd ..
+  #         git add ./Backup/
+  #         git commit -m "add files to Backup"
+  #         git push
   
-  overwrite-files-part-2:
-    needs: overwrite-files-part-1
-    runs-on: ubuntu-latest
-    steps:            
-      - name: Overwrite Files & Directories Part 2
-        id: OverwriteFiles2
-        run: |
-          cd ./Backup
-          ls -R
-          echo "Files and Directories overwritten/moved."
-          echo '::set-output name=num::0'
+  # overwrite-files-part-2:
+  #   needs: overwrite-files-part-1
+  #   runs-on: ubuntu-latest
+  #   steps:            
+  #     - name: Overwrite Files & Directories Part 2
+  #       id: OverwriteFiles2
+  #       run: |
+  #         cd ./Backup
+  #         ls -R
+  #         echo "Files and Directories overwritten/moved."
+  #         echo '::set-output name=num::0'
   
   extract-artifacts:
-    needs: overwrite-files-part-2
+    # needs: overwrite-files-part-2
+    needs: check-UnixScripts
     runs-on: ubuntu-latest
     steps:
       # extract artifacts from dev
