@@ -23,13 +23,7 @@ jobs:
         id: CheckUnixScripts
         working-directory: ./UnixScripts
         run: |
-          if [ -z "$(ls)" ]; then
-              echo "Empty"
-              echo '::set-output name=num::0'
-          else
-              echo "Not Empty"
-              echo '::set-output name=num::1'
-          fi
+          pwd
   
   # overwrite-files-part-1:
   #   needs: check-UnixScripts
