@@ -21,9 +21,8 @@ jobs:
     steps:
     - name: Check Unix Scripts Directory
       id: CheckUnixScripts
-      # working-directory: ./UnixScripts
+      working-directory: ./UnixScripts
       run: |
-        cd ./UnixScripts
         pwd
   
   # overwrite-files-part-1:
