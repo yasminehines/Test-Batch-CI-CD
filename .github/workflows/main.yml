@@ -23,6 +23,7 @@ jobs:
       id: CheckUnixScripts
       # working-directory: ./UnixScripts
       run: |
+        cd ./UnixScripts
         pwd
   
   # overwrite-files-part-1:
