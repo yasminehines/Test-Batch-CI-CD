@@ -21,7 +21,7 @@ jobs:
     steps:
     - name: Check Unix Scripts Directory
       id: CheckUnixScripts
-      working-directory: ./UnixScripts
+      working-directory: /home/runner/work/Test-Batch-CI-CD/Test-Batch-CI-CD/UnixScripts
       run: |
         pwd
   
