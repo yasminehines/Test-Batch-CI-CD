@@ -61,5 +61,5 @@ jobs:
         with:
           name: my-artifact
         # path of artifacts from dev
-          path: ./artifacts
+          path: ./new-artifacts
           if-no-files-found: warn
