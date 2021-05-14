@@ -9,22 +9,21 @@ on:
   #     - main
 
 jobs:
-  # test-example:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Run a one-line script
-  #       run: echo "Hello, world!"
-  
-  check-UnixScripts:
+  test-example:
     runs-on: ubuntu-latest
     steps:
-    - name: Check Unix Scripts Directory
-      id: CheckUnixScripts
-      # working-directory: ./UnixScripts
-      run: |
-        cd /home/runner/work/Test-Batch-CI-CD/Test-Batch-CI-CD/UnixScripts
-        pwd
+      - uses: actions/checkout@v2
+      - name: Run a one-line script
+        run: echo "Hello, world!"
+  
+  # check-UnixScripts:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - name: Check Unix Scripts Directory
+  #     id: CheckUnixScripts
+  #     working-directory: /UnixScripts
+  #     run: |
+  #       pwd
   
   # overwrite-files-part-1:
   #   needs: check-UnixScripts
