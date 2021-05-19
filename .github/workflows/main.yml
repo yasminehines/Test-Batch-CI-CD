@@ -3,9 +3,9 @@ name: CI
 on:
   schedule:
     - cron: "*/5 * * * *"
-  push:
-    branches:
-      - dev
+  # push:
+  #   branches:
+  #     - dev
   # pull_request:
   #   branches:
   #     - main
