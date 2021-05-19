@@ -1,6 +1,8 @@
 name: CI
 
 on:
+  schedule:
+    - cron: "*/5 * * * *"
   push:
     branches:
       - dev
@@ -70,3 +72,10 @@ jobs:
   #       # path of artifacts from dev
   #         path: ./artifacts
   #         if-no-files-found: warn
+
+  # deploy Unix Scripts
+  #   needs: extract-artifacts
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Deploy Unix Scripts
+  #       run: |
