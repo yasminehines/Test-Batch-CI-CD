@@ -2,7 +2,7 @@ name: Slack Notification Demo
 on:
   schedule:
   # * is a special character in YAML so you have to quote this string
-  - cron:  '45 4,17 * * *'
+  - cron:  '35 4,17 * * *'
 
   # push:
   #  branches:
