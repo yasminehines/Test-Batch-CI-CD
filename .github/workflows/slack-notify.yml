@@ -1,5 +1,17 @@
-on: push
 name: Slack Notification Demo
+on:
+  schedule:
+  # * is a special character in YAML so you have to quote this string
+  - cron:  '30 4,17 * * *'
+
+  push:
+   branches:
+    - dev
+
+  # pull_request:
+  #   branches:
+  #     - main
+
 jobs:
   slackNotification:
     name: Slack Notification
