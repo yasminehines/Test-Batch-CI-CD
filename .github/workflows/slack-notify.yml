@@ -1,0 +1,17 @@
+on: push
+name: Slack Notification Demo
+jobs:
+  slackNotification:
+    name: Slack Notification
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Slack Notification
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_CHANNEL: test-githubactions-connection
+        SLACK_COLOR: ${{ job.status }} # or a specific color like 'green' or '#ff00ff
+        SLACK_MESSAGE: 'Test worked! :rocket:'
+        SLACK_TITLE: Test Slack Notification
+        SLACK_USERNAME: yasmine.h
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
