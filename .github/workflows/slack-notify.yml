@@ -11,7 +11,7 @@ jobs:
       env:
         SLACK_CHANNEL: test-githubactions-connection
         SLACK_COLOR: ${{ job.status }} # or a specific color like 'green' or '#ff00ff
-        SLACK_ICON_EMOJI: ':perfect:'
+        SLACK_ICON: 'https://miro.medium.com/max/542/1*L8UwJymGdpTh-jSXhDZO6g.png'
         SLACK_MESSAGE: 'Test worked! :rocket:'
         SLACK_TITLE: Test Slack Notification
         SLACK_USERNAME: GitHub_actions_slackbot
