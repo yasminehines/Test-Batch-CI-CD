@@ -19,9 +19,10 @@ jobs:
       uses: rtCamp/action-slack-notify@v2
       env:
         SLACK_CHANNEL: test-githubactions-connection
-        SLACK_COLOR: ${{ job.status }} # or a specific color like 'green' or '#ff00ff
+        SLACK_COLOR: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning' 
         SLACK_ICON: 'https://github.githubassets.com/images/modules/logos_page/Octocat.png'
-        SLACK_MESSAGE: 'Test worked! :rocket:'
+        SLACK_MESSAGE: '${process.env.AS_WORKFLOW}\n${process.env.AS_JOB} (${process.env.AS_COMMIT}) of ${process.env.AS_REPO}@${process.env.AS_REF} by ${process.env.AS_AUTHOR} ${{ job.status }} in ${process.env.AS_TOOK}'
         SLACK_TITLE: Test Slack Notification
-        SLACK_USERNAME: GitHub_actions_slackbot
+        SLACK_USERNAME: GH_Actions_slackbot
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      if: always() # Pick up events even if the job fails or is cancelled.
