@@ -1,27 +1,27 @@
-# name: Slack Notification Demo
-# on:
+name: Slack Notification Demo
+on:
 
-#   # push:
-#   #  branches:
-#   #   - dev
+  # push:
+  #  branches:
+  #   - dev
 
-#   pull_request:
-#     branches:
-#       - main
+  pull_request:
+    branches:
+      - main
 
-# jobs:
-#   slackNotification:
-#     name: Slack Notification
-#     runs-on: ubuntu-latest
-#     steps:
-#     - uses: actions/checkout@v2
-#     - name: Slack Notification
-#       uses: rtCamp/action-slack-notify@v2
-#       env:
-#         SLACK_CHANNEL: test-githubactions-connection
-#         SLACK_COLOR: ${{ job.status }} # or a specific color like 'green' or '#ff00ff
-#         SLACK_ICON: 'https://github.githubassets.com/images/modules/logos_page/Octocat.png'
-#         SLACK_MESSAGE: 'Test worked! :rocket:'
-#         SLACK_TITLE: Test Slack Notification
-#         SLACK_USERNAME: GitHub_actions_slackbot
-#         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+jobs:
+  slackNotification:
+    name: Slack Notification
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Slack Notification
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_CHANNEL: test-githubactions-connection
+        SLACK_COLOR: ${{ job.status }} # or a specific color like 'green' or '#ff00ff
+        SLACK_ICON: 'https://github.githubassets.com/images/modules/logos_page/Octocat.png'
+        SLACK_MESSAGE: 'Test worked! :rocket:'
+        SLACK_TITLE: Test Slack Notification
+        SLACK_USERNAME: GitHub_actions_slackbot
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
