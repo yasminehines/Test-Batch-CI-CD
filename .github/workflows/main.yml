@@ -98,7 +98,9 @@ jobs:
     steps:
       - uses: 8398a7/action-slack@v3
         with:
-          status: custom
+          status: ${{ job.status }}
+          username: 'GitHub_actions_slackbot'
+          icon_url: 'https://github.githubassets.com/images/modules/logos_page/Octocat.png'
           fields: workflow,job,commit,repo,ref,author,took
           custom_payload: |
             {
