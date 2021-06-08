@@ -1,39 +1,38 @@
-# name: Slack Notification Demo
-# on:
-   # push:
-   #  branches:
-   #   - dev
+# name: Cherwell Ticket
 
-   # pull_request:
-   #   branches:
-   #     - main
+# on:
+#   workflow_dispatch:
+#   pull_request:
+#     branches: [main]
 
 # jobs:
-#   createchangerecord:
-#       name: Create Cherwell Change Record
-
-#       needs: [deployment-Azure, deployment-CF]
-
-#       # The type of runner that the job will run on
-#       runs-on: ubuntu-latest
-
-#       # Steps represent a sequence of tasks that will be executed as part of the job
-#       steps:
-#       - name: Create Completed Cherwell DevOps Change
+#   test-run:
+#     name: Cherwell Request
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v2
+      
+#       - name: Get Start Time
+#         id: startDate        
 #         run: |
-#           AUTHTOKEN=$(curl -X POST $CHERWELL_URL/CherwellAPI/token -H 'Accept: application/json' -H 'Cache-Control: no-cache' -H 'Content-Type: application/x-www-form-urlencoded' -d 'grant_type=password&client_id=${{ secrets.CHERWELL_CLIENTID }}&username=${{ secrets.CHERWELL_USERNAME }}&password=${{ secrets.CHERWELL_PASSWORD }}' | jq -r .access_token)
-#           curl -X POST \
-#             $CHERWELL_URL/CherwellAPI/api/V1/savebusinessobject \
-#             -H 'Accept: application/json' \
-#             -H 'Authorization: Bearer $AUTHTOKEN' \
-#             -H 'Cache-Control: no-cache' \
-#             -H 'Content-Type: application/json' \
-#             -d '{"fields":[{"dirty":false,"displayName":"RecID","fieldId":"934ec7a1704ca2736b712141c3a5bcdb9ef2119e25","html":null,"name":"RecID","value":""},{"dirty":true,"displayName":"ChangeType","fieldId":"9415e25a2ff067a36b8e5b4f3a921f75af0a261123","html":null,"name":"ChangeType","value":"DevOps"},{"dirty":true,"displayName":"Risk Form Complete","fieldId":"941657382b85f77a1610ad4a4c87e782e37d0242d2","html":null,"name":"RiskFormComplete","value":"True"},{"dirty":true,"displayName":"Owned By Team","fieldId":"934ec7a170225559c89c044742b6cbbff0de583c4c","html":null,"name":"OwnedByTeamName","value":"$CHERWELL_TEAMNAME"},{"dirty":true,"displayName":"Owned By Employee ID","fieldId":"94276cbe26676c59f9c8df424e8da7da5ca3443511","html":null,"name":"OwnedByEmployeeID","value":"$REQUESTING_EMPLOYEEID"},{"dirty":true,"displayName":"Title","fieldId":"9386ce5880c4ea6f41d4c14e1ca01237170049b3e7","html":null,"name":"Title","value":"GHEC:$ARCHER_APPNAME-$APPLICATION_VERSION"},{"dirty":true,"displayName":"Description","fieldId":"934fb3e2b82015e7ec07fa41098a9efcb20b1e49d6","html":null,"name":"Description","value":"$ARCHER_APPNAME: version $APPLICATION_VERSION requested by $REQUESTING_EMPLOYEEID in GitHub Actions.\nRelease Notes:\n${commitMessage}\n${description}"},{"dirty":true,"displayName":"Final Disposition","fieldId":"93e029113427c0108137d7447aad216f824eee8b3b","html":null,"name":"FinalDisposition","value":"$FINAL_DISPOSITION"},{"dirty":true,"displayName":"Change Artifact Location","fieldId":"9459e8ace8194b29d4b7d4486989d9d85cb1a2f021","html":null,"name":"ChangeArtifactLocation","value":"N/A"},{"dirty":true,"displayName":"Actual Start Date","fieldId":"93e3824368f580ea220edd4c4cb29e44e58a4b2d3b","html":null,"name":"ActualStartDate","value":"$START_TIME},{"dirty":true,"displayName":"Actual End Date","fieldId":"9366b32ec2ffd04910c99e45848a9dd407e43e6c61","html":null,"name":"ActualEndDate","value":"$END_TIME"},{"dirty":true,"displayName":"RiskLevel","fieldId":"93e087d5c4133875726485473a8bd4c2a14fa954da","html":null,"name":"RiskLevel","value":"Minor"},{"dirty":true,"displayName":"AffectedService/App","fieldId":"9386ceb0a1cf07d3d6740946708305e2bf7c1b3a64","html":null,"name":"AffectedServices","value":"$ARCHER_APPNAME"},{"dirty":true,"displayName":"Status","fieldId":"93543f5c71a782465c27994bba9bd8f1dece6dded8","html":null,"name":"Status","value":"Closed"},{"dirty":true,"displayName":"DevOps Deployment","fieldId":"9448b52a2d34b98924df96493ba5c9284c9cca5dd9","html":null,"name":"DevOpsDeployment","value":"Yes"}],"errorCode":null,"errorMessage":null,"hasError":false,"busObId":"9415fc008d154507293426436a9be4ed3d90bb6985"}'
-#         env:
-#           CHERWELL_URL: https://csmstage.aa.com
-#           CHERWELL_TEAMNAME: Enterprise DevOps
-#           ARCHER_APPNAME: Enterprise DevOps
-#           REQUESTING_EMPLOYEEID: 00212041
-#           FINAL_DISPOSITION: Completed
-#           START_TIME: 07/17/2020 9:10 AM
-#           END_TIME: 07/17/2020 9:15 AM
+#           echo "::set-output name=date::$(date +'%Y-%m-%dT%H:%M:%SZ')"
+        
+#       - name: Get End Time
+#         id: endDate
+#         run: |
+#           echo "::set-output name=date::$(date --date='6000 seconds' +'%Y-%m-%dT%H:%M:%SZ')"
+#       - name: Run Cherwell Action
+#         uses: ./
+#         with:
+#           username: ${{ secrets.CHERWELL_USR }}
+#           password: ${{ secrets.CHERWELL_PWD }}
+#           client_id: ${{ secrets.CHERWELL_CID }}
+#           cherwell_environment: 'stage' # Optional. Set to 'stage' for Stage. Defaults to prod.
+#           appName: 'Enterprise Devops' # Application name based on what is shown in Archer
+#           badgeNumber: '00221041'          
+#           team: 'Loyalty - Ventana - Air Partner'
+#           description: 'Testing from Github Actions'
+#           changeArtifactLocation: 'SomeLocation'
+#           changeProposedStartDateTime: ${{ steps.startDate.outputs.date }} 
+#           changeProposedEndDateTime: ${{ steps.endDate.outputs.date }}

@@ -27,23 +27,21 @@ jobs:
   #     run: |
   #       pwd
   
-  # overwrite-files-part-1:
-  #   needs: check-UnixScripts
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Overwrite Files & Directories
-  #       id: OverwriteFiles1
-  #       if: steps.CheckUnixScripts.outputs.num == 1
-  #       run: |
-  #         cd ./UnixScripts
-  #         git config --global user.email "yasmine.hines@aa.com"
-  #         git config --global user.name "yasminehines"
-  #         git mv *.ksh /home/runner/work/Test-Batch-CI-CD/Test-Batch-CI-CD/Backup
-  #         cd ..
-  #         git add ./Backup/
-  #         git commit -m "add files to Backup"
-  #         git push
-  
+  overwrite-files-part-1:
+    needs: check-UnixScripts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Overwrite Files & Directories
+        id: OverwriteFiles1
+        if: steps.CheckUnixScripts.outputs.num == 1
+        run: |
+          cd ./UnixScripts
+          git config --global user.email ${{ secrets.GIT_EMAIL }} 
+          git config --global user.name ${{ secrets.GIT_USER }}
+          git mv *.ksh /home/runner/work/Test-Batch-CI-CD/Test-Batch-CI-CD/Backup
+          cd ..
+          ls
+          
   # overwrite-files-part-2:
   #   needs: overwrite-files-part-1
   #   runs-on: ubuntu-latest
@@ -80,9 +78,9 @@ jobs:
   #     - name: Deploy Unix Scripts
   #       run: |
   
-  slackNotification:
-    name: Slack Notification
-    runs-on: ubuntu-latest
+  # slackNotification:
+  #   name: Slack Notification
+  #   runs-on: ubuntu-latest
   #   steps:
   #   - uses: actions/checkout@v2
   #   - name: Slack Notification
@@ -95,20 +93,3 @@ jobs:
   #       SLACK_TITLE: Test Slack Notification
   #       SLACK_USERNAME: GitHub_actions_slackbot
   #       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-    steps:
-      - uses: 8398a7/action-slack@v3
-        with:
-          status: ${{ job.status }}
-          username: 'GitHub_actions_slackbot'
-          icon_url: 'https://github.githubassets.com/images/modules/logos_page/Octocat.png'
-          fields: workflow,job,commit,repo,ref,author,took
-          custom_payload: |
-            {
-              attachments: [{
-                color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
-                text: `${process.env.AS_WORKFLOW}\n${process.env.AS_JOB} (${process.env.AS_COMMIT}) of ${process.env.AS_REPO}@${process.env.AS_REF} by ${process.env.AS_AUTHOR} ${{ job.status }} in ${process.env.AS_TOOK}`,
-              }]
-            }
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
-        if: always() # Pick up events even if the job fails or is canceled.
